@@ -1,0 +1,19 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+      
+server:
+  port: ${port:80}
+spring:
+  application:
+    name: service-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: route_hello
+          uri: lb://hello-world-client
+          predicates:
+            - Path=/api/**
+          filters:
+            - StripPrefix=1

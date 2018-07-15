@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-service
+  labels:
+    app: hello-world-service
+    version: 0.0.2
+spec:
+  selector:
+    matchLabels:
+      app: hello-world-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hello-world-service
+    spec:
+      containers:
+      - name: hello-world-service
+        image: 192.168.1.211:5000/k8s-ci:hello-world-service-0.0.2
+        imagePullPolicy: Always
+        env:
+        - name: eureka_host
+          value: "eureka.default.svc.cluster.local"
+        - name: eureka_port
+          value: "8761"

@@ -1,0 +1,20 @@
+# hello-world-client
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${random.int}
+    prefer-ip-address: true    
+          
+server:
+  port: 0
+  
+spring:
+  application:
+    name: hello-world-client
+    
+feign:
+  hystrix:
+    enabled: true

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-client
+  labels:
+    app: hello-world-client
+    version: 0.0.2
+spec:
+  selector:
+    matchLabels:
+      app: hello-world-client
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hello-world-client
+    spec:
+      containers:
+      - name: hello-world-client
+        image: 192.168.1.211:5000/k8s-ci:hello-world-client-0.0.2
+        imagePullPolicy: Always
+        env:
+        - name: eureka_host
+          value: "eureka.default.svc.cluster.local"
+        - name: eureka_port
+          value: "8761"

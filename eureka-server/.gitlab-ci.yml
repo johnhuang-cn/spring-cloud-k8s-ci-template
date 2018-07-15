@@ -1,0 +1,31 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=/root/.m2/repository"  # 指定maven本地库路径，配合7.2.4中的配置避免每次拉镜像
+  DOCKER_DRIVER: overlay2                                # 用overlay2优化性能
+  PROJECT_NAME: $CI_PROJECT_NAME                         # 用Gitlab工程名环境变量做后面打包的名字
+  PROJECT_VERSION: "0.0.2"
+
+stages:
+  - build
+  - deploy
+
+maven-build:
+  stage: build
+  script: 
+    - mvn package -B -DskipTests                                        # 跳过测试节省时间
+    - mv target/$CI_PROJECT_NAME*.jar target/app.jar                    # 打好的包重命名为app.jar
+    - docker build -t $DOCKER_HUB_REPO:$PROJECT_NAME-$PROJECT_VERSION . # 生成docker镜像
+    - docker push $DOCKER_HUB_REPO:$PROJECT_NAME-$PROJECT_VERSION       # 提交到镜像库
+  artifacts:
+    paths:
+      - ./*.yaml    # 输出Deployment.yaml和Service.yaml供下一阶段的kubectl发布用
+
+k8s-deploy:
+  stage: deploy
+  image: 
+    name: 192.168.1.211:5000/kubectl:1.11.0   # 使用9.2节中准备的kubectl客户端镜像
+    entrypoint: [""]                          # 覆盖原镜像的entrypoint，要不然会直接退出
+
+  script:
+    - kubectl apply -f Deployment.yaml        # 发布应用到k8s集群
+    - kubectl apply -f Service.yaml           # 创建一个对应的服务，这样可以有一个固定域名，以便其它组件访问
+    - kubectl set env deploy/eureka-server DEPLOY_DATE="$(date)"  # 让k8s强制更新镜像
