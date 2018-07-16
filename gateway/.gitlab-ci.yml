@@ -24,5 +24,4 @@ k8s-deploy:
 
   script:
     - kubectl apply -f Deployment.yaml
-    - kubectl apply -f Service.yaml
     - kubectl set env deploy/$CI_PROJECT_NAME DEPLOY_DATE="$(date)"

@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,3 +20,21 @@ spec:
       - name: eureka-server
         image: 192.168.1.211:5000/k8s-ci:eureka-server-0.0.2
         imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka
+  labels:
+    app: eureka
+    version: 0.0.2
+spec:
+  selector:
+    app: eureka-server
+  type: LoadBalancer      
+  ports:
+  - name: tcp-8761-8761
+    protocol: TCP
+    port: 8761
+    targetPort: 8761
+        

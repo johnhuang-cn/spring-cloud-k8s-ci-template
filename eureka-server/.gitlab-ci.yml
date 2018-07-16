@@ -27,5 +27,4 @@ k8s-deploy:
 
   script:
     - kubectl apply -f Deployment.yaml        # 发布应用到k8s集群
-    - kubectl apply -f Service.yaml           # 创建一个对应的服务，这样可以有一个固定域名，以便其它组件访问
     - kubectl set env deploy/eureka-server DEPLOY_DATE="$(date)"  # 让k8s强制更新镜像
