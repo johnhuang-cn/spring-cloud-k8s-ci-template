@@ -1,6 +1,6 @@
 # Spring Cloud & GitLab & Docker & K8S CI搭建
 Spring Cloud template projects and CI with GitLab, Docker, Kubernetes
-[Spring Cloud & K8S CI搭建.pdf](Spring%20Cloud%20K8S%20CI搭建.pdf)
+[Spring Cloud & K8S CI搭建.pdf](Spring%20Cloud%20K8S%20CI.pdf)
 
 ##	目标
 搭建Spring Cloud + GitLab + Docker + K8S的持续集成开发环境。
