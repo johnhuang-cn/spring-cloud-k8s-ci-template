@@ -40,3 +40,8 @@ https://docs.docker.com/get-started/
 ```
 minikube start --driver=docker --image-mirror-country=cn --registry-mirror=https://kaakiyao.mirror.aliyuncs.com
 ```
+##references
+
+https://www.guqing.xyz/archives/install-minikube
+
+https://www.jianshu.com/p/18441c7434a6
