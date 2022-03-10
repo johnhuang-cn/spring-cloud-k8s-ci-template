@@ -33,3 +33,10 @@ https://docs.docker.com/get-started/
 ![Spring Cloud Hello World Template](diagram/Spring%20Cloud%20Hello%20World%20Diagram.png)
 
 ![CI DIagram](diagram/GitLab%26K8S%20CI%20Diagram.png)
+
+## Known Issues
+1.GFW
+
+```
+minikube start --driver=docker --image-mirror-country=cn --registry-mirror=https://kaakiyao.mirror.aliyuncs.com
+```
